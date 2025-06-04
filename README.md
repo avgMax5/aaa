@@ -35,5 +35,10 @@ Spring MVC 구성을 **Spring Boot 없이** 만든 메이븐 빌드 기반의 Dy
             mvn clean package # target 에 war 생성
             docker compose -f docker-compose.dev.yml up --build --force-recreate # 톰캣에 위에 빌드한 war 파일 넣고 실행
          ```
-      - **IntelliJ** : VSCode와 동일한 방식이지만 Run > EditConfiguration 으로 등록해서 단축키 지정 가능
-         - Settings > Plugin 에서 Docker Plugin 설치 필요
+        - **IntelliJ** : VSCode와 동일한 방식이지만 Run > EditConfiguration 으로 등록해서 단축키 지정 가능
+        - Settings > Plugin 에서 Docker Plugin 설치 필요
+
+## MyBatis 사용
+
+`dispatcher-servlet.xml`에 H2 인메모리 데이터베이스와 MyBatis 설정이 포함되어 있습니다.
+예제 매퍼 `ExampleMapper`가 반환하는 목록을 홈 화면에서 확인할 수 있습니다.
