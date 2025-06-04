@@ -9,4 +9,7 @@
 	<insert id="insertUser"
 		parameterType="com.example.domain.User"> INSERT INTO users (id, username, email, password)
 		VALUES (#{id}, #{username}, #{email}, #{password}) </insert>
+
+	<update id="createUserTable"> CREATE TABLE IF NOT EXISTS users ( id INT PRIMARY
+		KEY, username VARCHAR(50), password VARCHAR(100), email VARCHAR(100) ) </update>
 </mapper>

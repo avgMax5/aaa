@@ -13,14 +13,24 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@MapperScan("com.example.mapper") 
+@MapperScan("com.example.mapper")
 public class MyBatisConfig {
 
-    @Bean
+/*     @Bean
     public DataSource dataSource() {
         HikariDataSource ds = new HikariDataSource();
         ds.setDriverClassName("oracle.jdbc.OracleDriver");
         ds.setJdbcUrl("jdbc:oracle:thin:@db.avgmax.in:1521:xe");
+        ds.setUsername("HJH");
+        ds.setPassword("HJH");
+        return new HikariDataSource(ds);
+    } */
+
+    @Bean
+    public DataSource dataSource() {
+        HikariDataSource ds = new HikariDataSource();
+        ds.setDriverClassName("org.mariadb.jdbc.Driver");
+        ds.setJdbcUrl("jdbc:mariadb://mariadb:3306/spring-legacy");
         ds.setUsername("HJH");
         ds.setPassword("HJH");
         return new HikariDataSource(ds);
@@ -31,8 +41,7 @@ public class MyBatisConfig {
         SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
         factory.setDataSource(dataSource);
         factory.setMapperLocations(
-            new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/*.xml")
-        );
+                new PathMatchingResourcePatternResolver().getResources("classpath*:mapper/mariadb/*.xml")); // mapper path
         return factory.getObject();
     }
 

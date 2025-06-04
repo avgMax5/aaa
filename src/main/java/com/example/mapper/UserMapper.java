@@ -6,5 +6,6 @@ public interface UserMapper {
 	User selectUserById(int id);
 	User selectUserByUsername(int id);
 	void insertUser(User user);
+	void createUserTable();
 }
 	

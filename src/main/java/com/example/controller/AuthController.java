@@ -24,15 +24,15 @@ public class AuthController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	// Spring 2.x 이상 지원
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String test(@RequestParam String username, @RequestParam String password, HttpServletRequest request) {
-        String ip = request.getRemoteAddr();
-        
-        logger.info("사용자 로그인 시도 : username = {}, ip = {}", username, ip);
-        
+		String ip = request.getRemoteAddr();
+
+		logger.info("사용자 로그인 시도 : username = {}, ip = {}", username, ip);
+
 		return "OK";
 	}
 
@@ -40,27 +40,33 @@ public class AuthController {
 	public String loginSubmit() {
 		return "login";
 	}
-	
+
 	@RequestMapping("/login-success")
 	public String loginSuccess() {
-	    return "login-success";
+		return "login-success";
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signupForm(Model model) {
-	    model.addAttribute("user", new User());
-	    return "signup";
+		model.addAttribute("user", new User());
+		return "signup";
 	}
-	
+
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
 	public String signupSubmit(@ModelAttribute User user) {
 		logger.info("회원가입 시도 : {}.", user);
-		userService.registerUser(user); 
-	    return "redirect:/auth/signup-success";
+		try {
+			userService.registerUser(user);
+			logger.info("회원가입 성공 : {}.", user);
+			return "redirect:/auth/signup-success";
+		} catch (Exception e) {
+			logger.error("회원가입 실패 : {}.", user);
+			return "redirect:/auth/signup-fail";
+		}
 	}
-	
+
 	@RequestMapping("/signup-success")
 	public String signupSuccess() {
-	    return "signup-success";
+		return "signup-success";
 	}
 }
