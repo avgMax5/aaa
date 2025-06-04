@@ -13,9 +13,31 @@
 
   <!-- @Controller 스캔 -->
   <context:component-scan base-package="com.example.controller" />
+  <context:component-scan base-package="com.example.service" />
+  <context:component-scan base-package="com.example.mapper" />
 
   <!-- @RequestMapping 처리 -->
   <mvc:annotation-driven />
+
+  <!-- H2 DataSource -->
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="org.h2.Driver" />
+    <property name="url" value="jdbc:h2:mem:testdb" />
+    <property name="username" value="sa" />
+    <property name="password" value="" />
+  </bean>
+
+  <!-- MyBatis SqlSessionFactory -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="configLocation" value="classpath:mybatis-config.xml" />
+    <property name="mapperLocations" value="classpath*:mappers/*.xml" />
+  </bean>
+
+  <!-- Mapper Scanner -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.example.mapper" />
+  </bean>
 
   <!-- ViewResolver 설정 -->
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
